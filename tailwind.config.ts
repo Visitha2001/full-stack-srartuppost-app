@@ -16,7 +16,8 @@ const config: Config = {
 			colors: {
 				primary: {
 					"100": "#FFE8F0",
-					DEFAULT: "#EE2B69",
+					"500": "#FF0051FF",
+					DEFAULT: "#FF0051FF",
 				},
 				secondary: "#FBE843",
 				black: {
@@ -31,7 +32,7 @@ const config: Config = {
 				},
 			},
 			fontFamily: {
-				"work-sans": ["var(--font-work-sans)"],
+				"work-sans": ["Work Sans", "sans-serif"],
 			},
 			borderRadius: {
 				lg: "var(--radius)",
