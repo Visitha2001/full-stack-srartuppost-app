@@ -8,7 +8,7 @@ const Navbar = async () => {
   const session = await auth()
 
   return (
-    <header className='px-5 py-2 bg-white shadow-sm font-work-sans'>
+    <header className='px-5 py-2 bg-white shadow-sm font-work-sans border-b-2 border-pink-700'>
       <nav className='flex justify-between items-center'>
         <Link href='/'>
           <Image src='/YCDirectory.png' alt='logo' width={144} height={30}/>
@@ -21,13 +21,13 @@ const Navbar = async () => {
                 <span> Crate</span>
               </Link>
               <Link href="/user/${session?.id}">
-                 <span>{session?.user?.name}</span>
+                 <span className='font-semibold'>{session?.user?.name}</span>
               </Link>
               <form action={async() => {
                 'use server'
                 await signOut({redirectTo : "/"})
               }}>
-                <button type='submit' className='border border-red-500 text-red-500 px-4 py-1 rounded-xl cursor-pointer hover:bg-red-400 hover:text-white'>Log-Out</button>
+                <button type='submit' className='border-2 border-red-500 text-red-500 px-4 py-1 rounded-xl cursor-pointer hover:bg-red-400 hover:text-white font-semibold'>Log-Out</button>
               </form>
             </>
           ) : (
@@ -35,7 +35,7 @@ const Navbar = async () => {
               'use server'
               await signIn ('github')
             }}>
-              <button type='submit' className='border border-gray-700 px-4 py-1 rounded-xl cursor-pointer hover:bg-gray-300'>Login</button>
+              <button type='submit' className='border-2 border-gray-700 px-4 py-1 rounded-xl cursor-pointer hover:bg-gray-300 font-semibold'>Login</button>
             </form>
           )}
         </div>
