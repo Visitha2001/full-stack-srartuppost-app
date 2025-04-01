@@ -4,7 +4,24 @@
     "react-dom": "$react-dom"
   },
 
-npx shadcn@latest init
+npx shadcn@latest
+
+sanity
+npm create sanity@latest -- --project flfshs5n --dataset production --template clean --typescript --output-path studio-jsm-yc_directory
+cd studio-jsm-yc_directory
+
+npm i next-sanity@canary
+
+remove --turbo from package.json for run http://localhost:3000/studio
+
+# On the project overview page, look for the Project ID under the "Settings" section
+NEXT_PUBLIC_SANITY_PROJECT_ID=flfshs5n
+# In the Sanity dashboard, navigate to the Datasets section for your project.
+NEXT_PUBLIC_SANITY_DATASET=production
+
+npm install sanity-plugin-markdown
+
+
 
 
 @import url("https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap");
