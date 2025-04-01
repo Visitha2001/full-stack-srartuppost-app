@@ -19,6 +19,10 @@ NEXT_PUBLIC_SANITY_PROJECT_ID=flfshs5n
 # In the Sanity dashboard, navigate to the Datasets section for your project.
 NEXT_PUBLIC_SANITY_DATASET=production
 
+npm install sanity-plugin-markdown
+
+
+
 
 @import url("https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap");
 
