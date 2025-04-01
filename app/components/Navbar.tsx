@@ -20,8 +20,15 @@ const Navbar = async () => {
               <Link href="/startup/create">
                 <span> Crate</span>
               </Link>
-              <Link href="/user/${session?.id}">
-                 <span className='font-semibold'>{session?.user?.name}</span>
+              <Link href="/user/${session?.id}" className="flex items-center gap-2">
+                <Image
+                  src={session.user.image || '/default-avatar.png'} // Fallback image if no profile image exists
+                  alt={`${session.user.name}'s profile`}
+                  width={30}
+                  height={30}
+                  className="rounded-full"
+                />
+                <span className='font-semibold'>{session?.user?.name}</span>
               </Link>
               <form action={async() => {
                 'use server'
