@@ -1,23 +1,29 @@
+// In page.tsx
 import Image from "next/image";
 import SearchForm from "../components/SearchForm";
-import StartupCard from "../components/StartupCard";
+import StartupCard, { StartupTypeCard } from "../components/StartupCard";
+import { client } from "@/sanity/lib/client";
+import { STARTUP_QUERY } from "@/sanity/lib/queries";
 
 export default async function Home({ searchParams }: {
-  searchParams: Promise<{ query?: string }>
+  searchParams: { query?: string }
 }) {
-  const query = (await searchParams).query;
-  const posts = [
-    {
-      _cratedAt: new Date(),
-      views: 55,
-      author: {_id: 1 , name: 'Visitha Nirmal' },
-      _id: 1,
-      description: "A revolutionary idea for a digital platform that has connects small businesses with the best talent",
-      image: "https://picsum.photos/300/175",
-      category: "Digital",
-      title: "Digital Media Platforms",
-    }
-  ]
+  const query = searchParams.query;
+
+  let posts: StartupTypeCard[] = [];
+  try {
+    posts = await client.fetch<StartupTypeCard[]>(STARTUP_QUERY);
+  } catch (error) {
+    console.error("Error fetching posts:", error);
+  }
+
+  const filteredPosts = query 
+    ? posts.filter(post => 
+        post.title?.toLowerCase().includes(query.toLowerCase()) ||
+        post.description?.toLowerCase().includes(query.toLowerCase()) ||
+        post.category?.toLowerCase().includes(query.toLowerCase())
+      )
+    : posts;
 
   return (
     <>
@@ -28,11 +34,11 @@ export default async function Home({ searchParams }: {
       </section>
 
       <section className="section_container px-6 py-10 max-w-7xl mx-auto text-3xl font-bold">
-        {query ? `Search results for ${query} :` : 'All Start-Ups :'}
+        {query ? `Search results for "${query}" :` : 'All Start-Ups :'}
 
         <ul className="mt-7 card_grid grid md:grid-cols-3 sm:grid-cols-2 gap-5">
-        {posts && posts.length > 0 ? (
-            posts.map((post: StartupCardType) => (
+          {filteredPosts.length > 0 ? (
+            filteredPosts.map((post) => (
               <StartupCard key={post._id} post={post} />
             ))
           ) : (
