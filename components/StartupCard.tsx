@@ -66,7 +66,7 @@ const StartupCard = ({ post }: { post: StartupTypeCard }) => {
                                 </p>
                             </Link>
                             <button>
-                                <Link href={`/startups/${_id}`}>
+                                <Link href={`/startup/${_id}`}>
                                     <span className="rounded-full bg-gray-900 font-medium text-[12px] text-white px-4 py-3">View Startup</span>
                                 </Link>
                             </button>
