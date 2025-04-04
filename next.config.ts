@@ -10,6 +10,13 @@ const nextConfig: NextConfig = {
         hostname: "*",
       }
     ]
+  },
+  experimental: {
+    ppr: false,
+  },
+  devIndicators: {
+    buildActivity: true,
+    buildActivityPosition: "bottom-right",
   }
 };
 

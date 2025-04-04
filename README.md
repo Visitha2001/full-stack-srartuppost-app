@@ -35,3 +35,21 @@ sanity-typegen.json
 }
 
 npx sanity@latest typegen generate
+
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "predev": "npm run typegen",
+    "prebuild": "npm run typegen",
+    "typegen": "sanity schema extract --path=./sanity/extract.json && sanity typegen generate"
+  },
+
+npm run dev
+
+npm i markdown-it
+npm install --save-dev @types/markdown-it
+
+add skeleton
+npx shadcn@latest add skeleton
