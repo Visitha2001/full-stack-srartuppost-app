@@ -4,18 +4,13 @@ import SearchForm from "../components/SearchForm";
 import StartupCard, { StartupTypeCard } from "../components/StartupCard";
 import { client } from "@/sanity/lib/client";
 import { STARTUP_QUERY } from "@/sanity/lib/queries";
+import { sanityFetch, SanityLive } from "@/sanity/lib/live";
 
 export default async function Home({ searchParams }: {
   searchParams: { query?: string }
 }) {
   const query = searchParams.query;
-
-  let posts: StartupTypeCard[] = [];
-  try {
-    posts = await client.fetch<StartupTypeCard[]>(STARTUP_QUERY);
-  } catch (error) {
-    console.error("Error fetching posts:", error);
-  }
+  const { data : posts} = await sanityFetch({ query: STARTUP_QUERY})
 
   const filteredPosts = query 
     ? posts.filter(post => 
@@ -46,6 +41,8 @@ export default async function Home({ searchParams }: {
           )}
         </ul>
       </section>
+
+      <SanityLive />
     </>
   );
 }
