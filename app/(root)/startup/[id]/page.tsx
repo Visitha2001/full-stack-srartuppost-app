@@ -7,6 +7,7 @@ import { notFound } from 'next/navigation';
 import React, { Suspense } from 'react'
 import markdownit from 'markdown-it';
 import { Skeleton } from '@/components/ui/skeleton';
+import View from '@/components/view';
 
 export const experimental_ppr = true;
 
@@ -84,6 +85,7 @@ const page = async ({params} : {params : Promise<{ id : string }>}) => {
           <Suspense fallback={<Skeleton
               className="bg-zinc-400 h-10 w-24 rounded-lg fixed bottom-3 right-3"
             />}>
+              <View id={post._id} />
           </Suspense>
         </div>
       </section>
