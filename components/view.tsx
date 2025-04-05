@@ -2,12 +2,23 @@ import React from 'react';
 import Ping from '@/components/ping';
 import { client } from '@/sanity/lib/client';
 import { STARTUP_VIEWS_QUERY } from '@/sanity/lib/queries';
-import { EyeIcon, ViewIcon } from 'lucide-react';
+import { EyeIcon } from 'lucide-react';
+import { writeClient } from '@/sanity/lib/write-client';
+import { after } from 'next/server';
+
+interface ViewsResponse {
+  views: number;
+}
 
 const View = async ({id} : {id : string}) => {
-  const {views : totalViews} = await client.withConfig({useCdn: false}).fetch(STARTUP_VIEWS_QUERY , {id});
+  const {views: totalViews} = await client
+    .withConfig({useCdn: false})
+    .fetch<ViewsResponse>(STARTUP_VIEWS_QUERY, {id});
 
-  // TODO: add actual view count
+  after(async() => await writeClient
+    .patch(id)
+    .set({views : totalViews + 1})
+    .commit())
 
   return (
     <div className="view-container flex justify-end items-center mt-5 fixed bottom-3 right-3">
