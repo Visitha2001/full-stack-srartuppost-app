@@ -48,6 +48,8 @@ npx sanity@latest typegen generate
 
 npm run dev
 
+npm i server-only
+
 npm i markdown-it
 npm install --save-dev @types/markdown-it
 
