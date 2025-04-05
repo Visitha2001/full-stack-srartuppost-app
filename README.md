@@ -55,3 +55,13 @@ npm install --save-dev @types/markdown-it
 
 add skeleton
 npx shadcn@latest add skeleton
+
+add shadcn components
+npx shadcn@latest add input textarea
+npx shadcn@latest add sonner
+
+fix react-is not found error
+npm install react-is
+
+to add markdown editor to add pitch
+npm i @uiw/react-md-editor
