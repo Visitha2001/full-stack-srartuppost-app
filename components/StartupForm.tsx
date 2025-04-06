@@ -1,17 +1,68 @@
 'use client'
-import React , {useState} from 'react'
+import React , {useActionState, useState} from 'react'
 import { Input } from './ui/input'
 import { Textarea } from './ui/textarea';
 import MDEditor from '@uiw/react-md-editor';
-import { SendIcon } from 'lucide-react';
+import { Send , AlertCircle } from 'lucide-react';
+import { formSchema } from '@/lib/validations';
+import { z } from "zod";
+import { useRouter } from 'next/navigation';
+
 
 const StartupForm = () => {
     const [errors , setErrors] = useState<Record<string , string>>({});
     const [pitch, setPitch] = useState("");
+    const router = useRouter();
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const handleFormSubmit = async (prevState: any, formData: FormData) => {
+        setIsSubmitting(true);
+        try {
+            const formValues = {
+                title: formData.get('title') as string,
+                description: formData.get('description') as string,
+                category: formData.get('category') as string,
+                link: formData.get('link') as string,
+                pitch,
+            };
+
+            setErrors({});
+
+            await formSchema.parseAsync(formValues);
+            console.log(formValues)
+
+            // const result = await createIdea(prevState, formData, pitch);
+
+            // if(result.status == "SUCCESS"){
+            //     alert("Idea Submitted Successfully");
+            //     setPitch("");
+            //     setErrors({});
+            //     router.push(`/startup/${result.id}`);
+            // }
+            // return result;
+        } catch (error) {
+            if(error instanceof z.ZodError) {
+                const fieldErrors = error.flatten().fieldErrors;
+                setErrors(fieldErrors as unknown as Record<string, string>)
+                return { ...prevState, errors: "Validation Failed", status: "Error" };
+            }
+            return { ...prevState, errors: "An unexpected error occurred", status: "Error" };
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
+    const [state , formAction, isPending] = useActionState(
+        handleFormSubmit,
+        {
+            error : "",
+            status: "INITIAL"
+        }
+    );
 
     return (
     <form
-        action={() => {}}
+        action={formAction}
         className="bg-white border w-[90%] border-gray-900 shadow-2xl rounded px-8 pt-6 pb-8 mb-10 max-w-5xl mx-auto mt-8"
     >
         <div>
@@ -26,7 +77,9 @@ const StartupForm = () => {
                 className="appearance-none border border-gray-900 rounded-md w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
                 required
             />
-            {errors.title && <p className="text-red-500">{errors.title}</p>}
+            {errors.title && <p className="flex  gap-2 items-center text-red-400 font-semibold mt-1">
+                <AlertCircle size={15} />
+                {errors.title}</p>}
         </div>
         <div className="mt-4">
             <label className="block uppercase text-gray-700 text-sm font-bold mb-2" htmlFor="description">
@@ -39,7 +92,9 @@ const StartupForm = () => {
                 className="appearance-none border border-gray-900 rounded-md w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
                 required
             />
-            {errors.description && <p className="text-red-500">{errors.description}</p>}
+            {errors.description && <p className="flex  gap-2 items-center text-red-400 font-semibold mt-1">
+                <AlertCircle size={15} />
+                {errors.description}</p>}
         </div>
         <div className="mt-4">
             <label className="block uppercase text-gray-700 text-sm font-bold mb-2" htmlFor="category">
@@ -53,7 +108,9 @@ const StartupForm = () => {
                 className="appearance-none border border-gray-900 rounded-md w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
                 required
             />
-            {errors.category && <p className="text-red-500">{errors.category}</p>}
+            {errors.category && <p className="flex  gap-2 items-center text-red-400 font-semibold mt-1">
+                <AlertCircle size={15} />
+                {errors.category}</p>}
         </div>
         <div className="mt-4">
             <label className="block uppercase text-gray-700 text-sm font-bold mb-2" htmlFor="image">
@@ -67,7 +124,9 @@ const StartupForm = () => {
                 className="appearance-none border border-gray-900 rounded-md w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
                 required
             />
-            {errors.link && <p className="text-red-500">{errors.link}</p>}
+            {errors.link && <p className="flex  gap-2 items-center text-red-400 font-semibold mt-1">
+                <AlertCircle size={15} />
+                {errors.link}</p>}
         </div>
         <div className="mt-4" data-color-mode="light">
             <label className="block uppercase text-gray-700 text-sm font-bold mb-2" htmlFor="pitch">
@@ -85,16 +144,18 @@ const StartupForm = () => {
                     placeholder: 'Enter your idea and what problems you resolve with your startup in here...',
                 }}
             />
-            {errors.pitch && <p className="text-red-500">{errors.pitch}</p>}
+            {errors.pitch && <p className="flex  gap-2 items-center text-red-400 font-semibold mt-1">
+                <AlertCircle size={15} />
+                {errors.pitch}</p>}
         </div>
-        <div className="flex items-center justify-between mt-4">
-            <button
-                type="submit"
-                className="w-full items-center bg-pink-600 text-white px-5 py-3 rounded-lg cursor-pointer hover:bg-pink-800 font-semibold transition-colors"
-            >
-                Submit Your Start-Up <SendIcon className="inline ml-2 mb-1" size={16} />
-            </button>
-        </div>
+        <button
+            type="submit"
+            className="w-full items-center bg-pink-600 text-white mt-4 px-5 py-3 rounded-lg cursor-pointer hover:bg-pink-800 font-semibold transition-colors"
+            disabled={isSubmitting}
+        >
+            {isSubmitting ? "Submitting..." : "Submit Your Pitch"}
+            <Send className="inline ml-2 mb-1" size={16} />
+        </button>
     </form>
   )
 }
