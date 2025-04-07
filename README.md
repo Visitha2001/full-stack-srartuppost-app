@@ -65,3 +65,6 @@ npm install react-is
 
 to add markdown editor to add pitch
 npm i @uiw/react-md-editor
+
+slug generator lib
+npm i slugify

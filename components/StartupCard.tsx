@@ -46,15 +46,16 @@ const StartupCard = ({ post }: { post: StartupTypeCard }) => {
 
                         <Link href={`/startups/${_id}`}>
                             <p className="startup-card_desc text-[16px] py-3 font-thin">
-                                {description}
+                                {description?.split(' ').slice(0, 10).join(' ') || ''}
+                                {description && description.split(' ').length > 10 ? '...' : ''}
                             </p>
                             {image && (
                                 <Image
                                     src={image}
                                     alt={title || "Startup image"}
                                     width={600}
-                                    height={1750}
-                                    className="rounded-sm"
+                                    height={175}
+                                    className="rounded-sm overflow-hidden"
                                 />
                             )}
                         </Link>
