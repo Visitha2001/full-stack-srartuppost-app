@@ -15,7 +15,6 @@ export default async function Home({ searchParams }: {
   });
 
   const session = await auth();
-  console.log('session id : ' + session?.id);
 
   return (
     <>
