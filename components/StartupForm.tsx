@@ -7,6 +7,7 @@ import { Send , AlertCircle } from 'lucide-react';
 import { formSchema } from '@/lib/validations';
 import { z } from "zod";
 import { useRouter } from 'next/navigation';
+import { createPitch } from '@/lib/actions';
 
 
 const StartupForm = () => {
@@ -29,17 +30,14 @@ const StartupForm = () => {
             setErrors({});
 
             await formSchema.parseAsync(formValues);
-            console.log(formValues)
 
-            // const result = await createIdea(prevState, formData, pitch);
+            const result = await createPitch(prevState, formData, pitch);
 
-            // if(result.status == "SUCCESS"){
-            //     alert("Idea Submitted Successfully");
-            //     setPitch("");
-            //     setErrors({});
-            //     router.push(`/startup/${result.id}`);
-            // }
-            // return result;
+            if(result.state == "SUCCESS" && result._id){
+                alert('Startup Successfully created')
+                router.push(`/startup/${result._id}`);
+            }
+            return result;
         } catch (error) {
             if(error instanceof z.ZodError) {
                 const fieldErrors = error.flatten().fieldErrors;
