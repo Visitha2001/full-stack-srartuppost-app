@@ -68,3 +68,6 @@ npm i @uiw/react-md-editor
 
 slug generator lib
 npm i slugify
+
+sentry install
+npx @sentry/wizard@latest -i nextjs --saas --org vnr-3l --project app-name
