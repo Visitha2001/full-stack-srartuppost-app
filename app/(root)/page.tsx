@@ -27,9 +27,9 @@ export default async function Home({ searchParams }: {
       <section className="section_container px-6 py-10 max-w-7xl mx-auto text-3xl font-bold">
         {query ? `Search results for "${query}" :` : 'All Start-Ups :'}
 
-        <ul className="mt-7 card_grid grid md:grid-cols-3 sm:grid-cols-2 gap-5">
+        <ul className="mt-7 card_grid grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 gap-5">
           {posts.length > 0 ? (
-            posts.map((post) => (
+            posts.map((post : any) => (
               <StartupCard key={post._id} post={post} />
             ))
           ) : (
