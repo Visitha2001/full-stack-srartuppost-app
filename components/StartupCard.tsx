@@ -54,8 +54,13 @@ const StartupCard = ({ post }: { post: StartupTypeCard }) => {
                                     src={image}
                                     alt={title || "Startup image"}
                                     width={600}
-                                    height={175}
-                                    className="rounded-sm overflow-hidden"
+                                    height={200}
+                                    className="rounded-sm h-[150px] w-full object-cover"
+                                    style={{
+                                    maxHeight: "200px",
+                                    minHeight: "200px",
+                                    paddingBottom: "2px"
+                                    }}
                                 />
                             )}
                         </Link>
