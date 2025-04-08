@@ -1,5 +1,4 @@
 import { auth , signIn , signOut} from '@/auth';
-import { redirect } from 'next/dist/server/api-utils';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
@@ -28,7 +27,9 @@ const Navbar = async () => {
                   height={30}
                   className="rounded-full"
                 />
-                <span className='font-semibold'>{session?.user?.name}</span>
+                <span className="hidden md:inline font-semibold">
+                  {session?.user?.name}
+                </span>
               </Link>
               <form action={async() => {
                 'use server'
