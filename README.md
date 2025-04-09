@@ -1,73 +1,129 @@
-  "packageManager": "npm@11.2.0",
-  "overrides": {
-    "react": "$react",
-    "react-dom": "$react-dom"
-  },
+# Project Setup Documentation
 
-npx shadcn@latest
+## Initial Setup
+1. **Package Manager Configuration**
+   ```json
+   "packageManager": "npm@11.2.0",
+   "overrides": {
+     "react": "$react",
+     "react-dom": "$react-dom"
+   }
+   ```
 
-sanity
-npm create sanity@latest -- --project flfshs5n --dataset production --template clean --typescript --output-path studio-jsm-yc_directory
-cd studio-jsm-yc_directory
+2. **ShadCN UI Installation**
+   ```bash
+   npx shadcn@latest
+   ```
 
-npm i next-sanity@canary
+## Sanity CMS Setup
+1. **Create Sanity Project**
+   ```bash
+   npm create sanity@latest -- --project flfshs5n --dataset production --template clean --typescript --output-path studio-jsm-yc_directory
+   cd studio-jsm-yc_directory
+   ```
 
-remove --turbo from package.json for run http://localhost:3000/studio
+2. **Next.js Integration**
+   ```bash
+   npm i next-sanity@canary
+   ```
 
-# On the project overview page, look for the Project ID under the "Settings" section
-NEXT_PUBLIC_SANITY_PROJECT_ID=flfshs5n
-# In the Sanity dashboard, navigate to the Datasets section for your project.
-NEXT_PUBLIC_SANITY_DATASET=production
+3. **Important Note**
+   - Remove `--turbo` from `package.json` for local development at `http://localhost:3000/studio`
 
+4. **Environment Variables**
+   ```
+   NEXT_PUBLIC_SANITY_PROJECT_ID=flfshs5n
+   NEXT_PUBLIC_SANITY_DATASET=production
+   ```
+
+## Markdown Support
+```bash
 npm install sanity-plugin-markdown
-
-GRPQ query language
-
-npx sanity@latest schema extract --path=./sanity/extract.json
-
-
-sanity-typegen.json
-// Use the config options in sanity-typegen.json to change output directory
-{
-  "path": "'../../my-cool-app/src/**/*.{ts,tsx,js,jsx}'", // glob pattern to your typescript files
-  "schema": "../../my-cool-app/sanity-schemas.json", // path to your schema file, generated with 'sanity schema extract' command
-  "generates": "../../my-cool-app/sanity.types.ts" // path to the output file for generated type definitions
-}
-
-npx sanity@latest typegen generate
-
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "predev": "npm run typegen",
-    "prebuild": "npm run typegen",
-    "typegen": "sanity schema extract --path=./sanity/extract.json && sanity typegen generate"
-  },
-
-npm run dev
-
-npm i server-only
-
 npm i markdown-it
 npm install --save-dev @types/markdown-it
+```
 
-add skeleton
-npx shadcn@latest add skeleton
+## Type Generation System
+1. **Extract Schema**
+   ```bash
+   npx sanity@latest schema extract --path=./sanity/extract.json
+   ```
 
-add shadcn components
-npx shadcn@latest add input textarea
-npx shadcn@latest add sonner
+2. **Typegen Configuration (`sanity-typegen.json`)**
+   ```json
+   {
+     "path": "'../../my-cool-app/src/**/*.{ts,tsx,js,jsx}'",
+     "schema": "../../my-cool-app/sanity-schemas.json",
+     "generates": "../../my-cool-app/sanity.types.ts"
+   }
+   ```
 
-fix react-is not found error
-npm install react-is
+3. **Generate Types**
+   ```bash
+   npx sanity@latest typegen generate
+   ```
 
-to add markdown editor to add pitch
-npm i @uiw/react-md-editor
+## Scripts Configuration (`package.json`)
+```json
+"scripts": {
+  "dev": "next dev",
+  "build": "next build",
+  "start": "next start",
+  "lint": "next lint",
+  "predev": "npm run typegen",
+  "prebuild": "npm run typegen",
+  "typegen": "sanity schema extract --path=./sanity/extract.json && sanity typegen generate"
+}
+```
 
-slug generator lib
-npm i slugify
+## Additional Dependencies
+1. **Server-Side Only**
+   ```bash
+   npm i server-only
+   ```
 
-sentry install
+2. **UI Components**
+   ```bash
+   npx shadcn@latest add skeleton
+   npx shadcn@latest add input textarea
+   npx shadcn@latest add sonner
+   ```
+
+3. **React Fix**
+   ```bash
+   npm install react-is
+   ```
+
+4. **Markdown Editor**
+   ```bash
+   npm i @uiw/react-md-editor
+   ```
+
+5. **Slug Generation**
+   ```bash
+   npm i slugify
+   ```
+
+## Sentry Integration
+```bash
 npx @sentry/wizard@latest -i nextjs --saas --org vnr-3l --project app-name
+```
+
+## Key Technologies
+- **GRPQ Query Language**: Used for Sanity data querying
+- **Type Generation**: Automated type safety for Sanity schemas
+- **Markdown Support**: Both in CMS and frontend rendering
+
+## Development Workflow
+1. Run type generation before development/build:
+   ```bash
+   npm run typegen
+   ```
+2. Start development server:
+   ```bash
+   npm run dev
+   ```
+
+---
+
+This documentation organizes all your setup commands and configurations in a logical flow, making it easier to understand and maintain the project setup.
